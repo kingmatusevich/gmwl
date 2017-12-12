@@ -5344,16 +5344,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var ReactGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
+  var markers = props.markers;
+
+
   return _react2.default.createElement(
     _reactGoogleMaps.GoogleMap,
     {
-      defaultZoom: 8,
-      defaultCenter: { lat: -34.397, lng: 150.644 } },
-    _react2.default.createElement(_reactGoogleMaps.Marker, { position: { lat: -34.397, lng: 150.644 } })
+      defaultZoom: props.defaultZoom,
+      defaultCenter: props.defaultCenter },
+    markers.map(function (marker, index) {
+      return _react2.default.createElement(_reactGoogleMaps.Marker, {
+        key: index,
+        position: marker.position });
+    })
   );
 });
 
-var WithScript = (0, _reactGoogleMaps.withScriptjs)(ReactGoogleMap);
+var GoogleMapsWithScript = (0, _reactGoogleMaps.withScriptjs)(ReactGoogleMap);
 
 var GoogleMapWithLayers = function (_Component) {
   _inherits(GoogleMapWithLayers, _Component);
@@ -5367,11 +5374,14 @@ var GoogleMapWithLayers = function (_Component) {
   _createClass(GoogleMapWithLayers, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(WithScript, {
+      return _react2.default.createElement(GoogleMapsWithScript, {
         googleMapURL: this.props.googleMapURL,
         loadingElement: this.props.loadingElement,
         containerElement: this.props.containerElement,
-        mapElement: this.props.mapElement });
+        mapElement: this.props.mapElement,
+        defaultCenter: this.props.defaultCenter,
+        defaultZoom: this.props.defaultZoom,
+        markers: this.props.markers });
     }
   }]);
 
@@ -5379,17 +5389,29 @@ var GoogleMapWithLayers = function (_Component) {
 }(_react.Component);
 
 GoogleMapWithLayers.propTypes = {
-  googleMapURL: _propTypes2.default.string.isRequired,
-  loadingElement: _propTypes2.default.element.isRequired,
-  containerElement: _propTypes2.default.element.isRequired,
-  mapElement: _propTypes2.default.element.isRequired
+  googleMapURL: _propTypes2.default.string,
+  loadingElement: _propTypes2.default.element,
+  containerElement: _propTypes2.default.element,
+  mapElement: _propTypes2.default.element,
+  defaultCenter: _propTypes2.default.shape({
+    lat: _propTypes2.default.number,
+    lng: _propTypes2.default.number
+  }),
+  defaultZoom: _propTypes2.default.number,
+  marker: _propTypes2.default.array
 };
 
 GoogleMapWithLayers.defaultProps = {
   googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
   loadingElement: _react2.default.createElement('div', { style: { height: '100%' } }),
   containerElement: _react2.default.createElement('div', { style: { height: '100%' } }),
-  mapElement: _react2.default.createElement('div', { style: { height: '100%' } })
+  mapElement: _react2.default.createElement('div', { style: { height: '100%' } }),
+  defaultCenter: {
+    lat: -27.4780849,
+    lng: -58.8346995
+  },
+  defaultZoom: 10,
+  markers: []
 };
 
 exports.default = GoogleMapWithLayers;
