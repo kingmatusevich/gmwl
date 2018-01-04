@@ -18,7 +18,7 @@ module.exports = {
         include: path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components|build)/,
         options: {
-          presets: ['env', 'react', 'stage-2']
+          presets: ['env', 'react', 'stage-2', 'flow']
         }
       }
     ]

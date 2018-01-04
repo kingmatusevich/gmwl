@@ -5763,17 +5763,13 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _react = __webpack_require__(0);
 
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(1);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var React = _interopRequireWildcard(_react);
 
 var _reactGoogleMaps = __webpack_require__(137);
 
 var _MarkerClusterer = __webpack_require__(136);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5790,15 +5786,15 @@ var ReactGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
 
   var renderMarkers = function renderMarkers(markers) {
     var renderedMarkers = markers.map(function (marker, index) {
-      return _react2.default.createElement(
+      return React.createElement(
         _reactGoogleMaps.Marker,
         {
           key: index,
           position: marker.position },
-        marker.showInfoWindow && marker.infoWindow && _react2.default.createElement(
+        marker.showInfoWindow && marker.infoWindow && React.createElement(
           _reactGoogleMaps.InfoWindow,
           { onCloseClick: marker.onCloseClick },
-          typeof marker.infoWindow === 'string' ? _react2.default.createElement(
+          typeof marker.infoWindow === 'string' ? React.createElement(
             'p',
             null,
             marker.infoWindow
@@ -5808,7 +5804,7 @@ var ReactGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
     });
 
     if (clusters) {
-      return _react2.default.createElement(
+      return React.createElement(
         _MarkerClusterer.MarkerClusterer,
         null,
         renderedMarkers
@@ -5818,7 +5814,7 @@ var ReactGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
     }
   };
 
-  return _react2.default.createElement(
+  return React.createElement(
     _reactGoogleMaps.GoogleMap,
     {
       defaultCenter: defaultCenter,
@@ -5829,8 +5825,8 @@ var ReactGoogleMap = (0, _reactGoogleMaps.withGoogleMap)(function (props) {
 
 var GoogleMapsWithScript = (0, _reactGoogleMaps.withScriptjs)(ReactGoogleMap);
 
-var GoogleMapWithLayers = function (_Component) {
-  _inherits(GoogleMapWithLayers, _Component);
+var GoogleMapWithLayers = function (_React$Component) {
+  _inherits(GoogleMapWithLayers, _React$Component);
 
   function GoogleMapWithLayers() {
     _classCallCheck(this, GoogleMapWithLayers);
@@ -5841,7 +5837,7 @@ var GoogleMapWithLayers = function (_Component) {
   _createClass(GoogleMapWithLayers, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(GoogleMapsWithScript, {
+      return React.createElement(GoogleMapsWithScript, {
         googleMapURL: this.props.googleMapURL,
         loadingElement: this.props.loadingElement,
         containerElement: this.props.containerElement,
@@ -5854,36 +5850,14 @@ var GoogleMapWithLayers = function (_Component) {
   }]);
 
   return GoogleMapWithLayers;
-}(_react.Component);
-
-GoogleMapWithLayers.propTypes = {
-  clusters: _propTypes2.default.bool,
-  googleMapURL: _propTypes2.default.string,
-  loadingElement: _propTypes2.default.element,
-  containerElement: _propTypes2.default.element,
-  mapElement: _propTypes2.default.element,
-  defaultCenter: _propTypes2.default.shape({
-    lat: _propTypes2.default.number,
-    lng: _propTypes2.default.number
-  }),
-  defaultZoom: _propTypes2.default.number,
-  marker: _propTypes2.default.arrayOf(_propTypes2.default.shape({
-    position: {
-      lat: _propTypes2.default.number.isRequired,
-      lng: _propTypes2.default.number.isRequired
-    },
-    InfoWindow: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.element]),
-    showInfoWindow: _propTypes2.default.bool,
-    onCloseClick: _propTypes2.default.func
-  }))
-};
+}(React.Component);
 
 GoogleMapWithLayers.defaultProps = {
   googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
-  loadingElement: _react2.default.createElement('div', { style: { height: '100%' } }),
-  containerElement: _react2.default.createElement('div', { style: { height: '100%' } }),
-  mapElement: _react2.default.createElement('div', { style: { height: '100%' } }),
-  clusters: true,
+  loadingElement: React.createElement('div', { style: { height: '100%' } }),
+  containerElement: React.createElement('div', { style: { height: '100%' } }),
+  mapElement: React.createElement('div', { style: { height: '100%' } }),
+  clusters: 3,
   defaultCenter: {
     lat: -27.4780849,
     lng: -58.8346995
@@ -5891,7 +5865,6 @@ GoogleMapWithLayers.defaultProps = {
   defaultZoom: 10,
   markers: []
 };
-
 exports.default = GoogleMapWithLayers;
 
 /***/ }),

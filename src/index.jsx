@@ -1,9 +1,34 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { GoogleMap, Marker, InfoWindow, withGoogleMap, withScriptjs } from 'react-google-maps'
 import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer';
 
-const ReactGoogleMap = withGoogleMap((props) => {
+type MarkerType = {
+  position: {
+    lat: number,
+    lng: number
+  },
+  InfoWindow: string | Element,
+  showInfoWindow: bool,
+  onCloseClick: Function
+}
+
+type PropsTypes = {
+  googleMapURL: string,
+  loadingElement: Element,
+  containerElement: Element,
+  mapElement: Element,
+  clusters: bool,
+  defaultCenter: {
+    lat: number,
+    lng: number
+  },
+  defaultZoom: number,
+  markers: Array<MarkerType>
+};
+
+const ReactGoogleMap = withGoogleMap((props: PropsTypes) => {
   let {
     clusters,
     defaultCenter,
@@ -51,7 +76,22 @@ const ReactGoogleMap = withGoogleMap((props) => {
 
 const GoogleMapsWithScript = withScriptjs(ReactGoogleMap);
 
-class GoogleMapWithLayers extends Component {
+class GoogleMapWithLayers extends React.Component<PropsTypes> {
+
+  static defaultProps = {
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
+    loadingElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `100%` }} />,
+    mapElement: <div style={{ height: `100%` }} />,
+    clusters: 3,
+    defaultCenter: {
+      lat: -27.4780849,
+      lng: -58.8346995
+    },
+    defaultZoom: 10,
+    markers: []
+  }
+
   render () {
     return (
       <GoogleMapsWithScript
@@ -66,41 +106,5 @@ class GoogleMapWithLayers extends Component {
     )
   }
 }
-
-GoogleMapWithLayers.propTypes = {
-  clusters: PropTypes.bool,
-  googleMapURL: PropTypes.string,
-  loadingElement: PropTypes.element,
-  containerElement: PropTypes.element,
-  mapElement: PropTypes.element,
-  defaultCenter: PropTypes.shape({
-    lat: PropTypes.number,
-    lng: PropTypes.number
-  }),
-  defaultZoom: PropTypes.number,
-  marker: PropTypes.arrayOf(PropTypes.shape({
-    position: {
-      lat: PropTypes.number.isRequired,
-      lng: PropTypes.number.isRequired
-    },
-    InfoWindow: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    showInfoWindow: PropTypes.bool,
-    onCloseClick: PropTypes.func
-  }))
-};
-
-GoogleMapWithLayers.defaultProps = {
-  googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places",
-  loadingElement: <div style={{ height: `100%` }} />,
-  containerElement: <div style = {{ height: `100%` }} />,
-  mapElement: <div style = {{ height: `100%` }} />,
-  clusters: true,
-  defaultCenter: {
-    lat: -27.4780849,
-    lng: -58.8346995
-  },
-  defaultZoom: 10,
-  markers: []
-};
 
 export default GoogleMapWithLayers;
