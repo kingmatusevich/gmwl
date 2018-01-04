@@ -7,7 +7,7 @@ import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerC
 type MarkerType = {
   position: {
     lat: number,
-    lng: number
+    lng: number,
   },
   InfoWindow: string | Element,
   showInfoWindow: bool,
